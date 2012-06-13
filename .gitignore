@@ -1,0 +1,7 @@
+Demo/Library
+Demo/Temp
+Demo/*.suo
+Demo/*.user
+Demo/*.pidb
+Demo/*.userprefs
+.DS_Store
