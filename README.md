@@ -9,9 +9,11 @@ Simple debug view for Unity.
 	Devu.Log(string.Format("Mouse Position z={0}", mousePosition.z));
 
 ## Notice
-Devu.FontSize value does NOT effect Android/iOS device.  
-If you want to change the size of these devices
+Devu.FontSize("Font Size" in Devu inspector) value does NOT effect Android/iOS device.  
+If you want to change font size of these devices
 
-* Import TTF font to Assets.
-* Specify the font to Devu.Font.
-* Setting Ascii or Unicode as Character setting and change font size in TTF font Inspector.
+1. Import TTF font to Assets.
+2. Specify the font to Devu.Font(or "Font" in Devu inspector).
+![](https://github.com/yhirano/UnitySimpleDebugView/raw/master/Doc/SpecifyFont.png)
+3. Setting Ascii or Unicode to Character setting and change Font size setting in TTF font Inspector.
+![](https://github.com/yhirano/UnitySimpleDebugView/raw/master/Doc/SettingFont.png)
