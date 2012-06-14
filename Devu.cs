@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Devu : MonoBehaviour
 {
+
+#region Public fields
+	
 	/// <summary>
 	/// The position of debug view.
 	/// </summary>
@@ -42,9 +45,23 @@ public class Devu : MonoBehaviour
 	public int FontSize = 0;
 	
 	/// <summary>
+	/// The text offset x.
+	/// </summary>
+	public int TextOffsetX = 8;
+	
+	/// <summary>
+	/// The text offset y.
+	/// </summary>
+	public int TextOffsetY = 8;
+	
+	/// <summary>
 	/// The color of the debug view background.
 	/// </summary>
 	public Color BackgroundColor = new Color (0, 0, 0, 0.5F);
+	
+#endregion
+	
+#region Private fields
 	
 	/// <summary>
 	/// The singleton instance.
@@ -79,7 +96,9 @@ public class Devu : MonoBehaviour
 	/// <summary>
 	/// The text offset in debug view.
 	/// </summary>
-	private static readonly Vector2 TEXT_OFFSET = new Vector2 (8, 8);
+	private Vector2 textOffset = new Vector2 (8, 8);
+	
+#endregion
 	
 	void Start ()
 	{
@@ -122,7 +141,8 @@ public class Devu : MonoBehaviour
 		// Font size value effects only dynamic font supported envirment (Currentry PC/Mac only). 
 #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
 		guiStyle.fontSize = FontSize;
-#endif // #if UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+#endif // #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
+
 		guiStyle.normal.textColor = FontColor;
 		guiStyle.normal.background = backgroundTexture;
 #if FALSE
@@ -141,11 +161,16 @@ public class Devu : MonoBehaviour
 		guiStyle.onFocused.textColor = FontColor; // nessecary?
 		guiStyle.onFocused.background = backgroundTexture;
 #endif // #if FALSE
-		guiStyle.contentOffset = TEXT_OFFSET;
+
+		textOffset.x = TextOffsetX;
+		textOffset.y = TextOffsetY;
+		guiStyle.contentOffset = textOffset;
 		
 		//GUI.Label (ViewPosition, viewText, guiStyle);
 		GUI.Box (viewPosition, viewText, guiStyle);
 	}
+	
+#region Public methods
 	
 	public static void Log (string text)
 	{
@@ -159,6 +184,10 @@ public class Devu : MonoBehaviour
 		instance.text += text + "\n";
 	}
 	
+#endregion
+
+#region Private methods
+	
 	/// <summary>
 	/// Creates the singleton instance.
 	/// </summary>
@@ -170,6 +199,7 @@ public class Devu : MonoBehaviour
 				instance = (new GameObject ("Devu")).AddComponent<Devu> ();
 			}
 		}
-
 	}
+	
+#endregion
 }
