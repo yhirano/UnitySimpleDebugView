@@ -9,32 +9,32 @@ public class Devu : MonoBehaviour
 	/// <summary>
 	/// The position of debug view.
 	/// </summary>
-	public int X = 5;
+	public int viewX = 5;
 	
 	/// <summary>
 	/// The position of debug view.
 	/// </summary>
-	public int Y = 5;
+	public int viewY = 5;
 	
 	/// <summary>
 	/// The width of debug view.
 	/// </summary>
-	public int Width = 200;
+	public int width = 200;
 	
 	/// <summary>
 	/// The height of debug view.
 	/// </summary>
-	public int Height = 125;
+	public int height = 125;
 	
 	/// <summary>
 	/// The font.
 	/// </summary>
-	public Font Font = null;
+	public Font font = null;
 	
 	/// <summary>
 	/// The color of the font.
 	/// </summary>
-	public Color FontColor = new Color (0, 1, 0);
+	public Color fontColor = new Color (0, 1, 0);
 	
 	/// <summary>
 	/// The size of the font.
@@ -42,22 +42,22 @@ public class Devu : MonoBehaviour
 	/// <description>
 	/// This value effects only dynamic font supported envirment (Currentry Editor/PC/Mac only).
 	/// </description>
-	public int FontSize = 0;
+	public int fontSize = 0;
 	
 	/// <summary>
 	/// The text offset x.
 	/// </summary>
-	public int TextOffsetX = 8;
+	public int textOffsetX = 8;
 	
 	/// <summary>
 	/// The text offset y.
 	/// </summary>
-	public int TextOffsetY = 8;
+	public int textOffsetY = 8;
 	
 	/// <summary>
 	/// The color of the debug view background.
 	/// </summary>
-	public Color BackgroundColor = new Color (0, 0, 0, 0.5F);
+	public Color backgroundColor = new Color (0, 0, 0, 0.5F);
 	
 #endregion
 	
@@ -98,6 +98,8 @@ public class Devu : MonoBehaviour
 	/// </summary>
 	private Vector2 textOffset = new Vector2 (8, 8);
 	
+	private bool viewEnabled = true;
+	
 #endregion
 	
 	void Start ()
@@ -117,10 +119,14 @@ public class Devu : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		viewPosition.x = X;
-		viewPosition.y = Y;
-		viewPosition.width = Width;
-		viewPosition.height = Height;
+		if (viewEnabled == false) {
+			return;
+		}
+		
+		viewPosition.x = viewX;
+		viewPosition.y = viewY;
+		viewPosition.width = width;
+		viewPosition.height = height;
 		
 		if (backgroundTexture == null) {
 			backgroundTexture = new Texture2D (1, 1);
@@ -128,42 +134,42 @@ public class Devu : MonoBehaviour
 		// Fill the texture.
 		for (int y = 0; y < backgroundTexture.height; ++y) {
 			for (int x  = 0; x < backgroundTexture.width; ++x) {
-				backgroundTexture.SetPixel (x, y, BackgroundColor);
+				backgroundTexture.SetPixel (x, y, backgroundColor);
 			}
 		}
 		// Apply all SetPixel calls
 		backgroundTexture.Apply ();
 		
-		if (Font != null) {
-			guiStyle.font = Font;
+		if (font != null) {
+			guiStyle.font = font;
 		}
 		
 		// Font size value effects only dynamic font supported envirment (Currentry PC/Mac only). 
 #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
-		guiStyle.fontSize = FontSize;
+		guiStyle.fontSize = fontSize;
 #endif // #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN
 
-		guiStyle.normal.textColor = FontColor;
+		guiStyle.normal.textColor = fontColor;
 		guiStyle.normal.background = backgroundTexture;
 #if FALSE
-		guiStyle.hover.textColor = FontColor; // nessecary?
+		guiStyle.hover.textColor = fontColor; // nessecary?
 		guiStyle.hover.background = backgroundTexture; // nessecary?
-		guiStyle.active.textColor = FontColor; // nessecary?
+		guiStyle.active.textColor = fontColor; // nessecary?
 		guiStyle.active.background = backgroundTexture; // nessecary?
-		guiStyle.focused.textColor = FontColor; // nessecary?
+		guiStyle.focused.textColor = fontColor; // nessecary?
 		guiStyle.focused.background = backgroundTexture; // nessecary?
-		guiStyle.onNormal.textColor = FontColor; // nessecary?
+		guiStyle.onNormal.textColor = fontColor; // nessecary?
 		guiStyle.onNormal.background = backgroundTexture; // nessecary?
-		guiStyle.onHover.textColor = FontColor; // nessecary?
+		guiStyle.onHover.textColor = fontColor; // nessecary?
 		guiStyle.onHover.background = backgroundTexture; // nessecary?
-		guiStyle.onActive.textColor = FontColor; // nessecary?
+		guiStyle.onActive.textColor = fontColor; // nessecary?
 		guiStyle.onActive.background = backgroundTexture; // nessecary?
-		guiStyle.onFocused.textColor = FontColor; // nessecary?
+		guiStyle.onFocused.textColor = fontColor; // nessecary?
 		guiStyle.onFocused.background = backgroundTexture;
 #endif // #if FALSE
 
-		textOffset.x = TextOffsetX;
-		textOffset.y = TextOffsetY;
+		textOffset.x = textOffsetX;
+		textOffset.y = textOffsetY;
 		guiStyle.contentOffset = textOffset;
 		
 		//GUI.Label (ViewPosition, viewText, guiStyle);
@@ -171,6 +177,127 @@ public class Devu : MonoBehaviour
 	}
 	
 #region Public methods
+	
+	/// <summary>
+	/// The position of debug view.
+	/// </summary>
+	public static int ViewX
+	{
+		set {
+			CreateInstance();
+			instance.viewX = value;
+		}
+	}
+	
+	/// <summary>
+	/// The position of debug view.
+	/// </summary>
+	public static int ViewY
+	{
+		set {
+			CreateInstance();
+			instance.viewY = value;
+		}
+	}
+	
+	/// <summary>
+	/// The width of debug view.
+	/// </summary>
+	public static int Width
+	{
+		set {
+			CreateInstance();
+			instance.width = value;
+		}
+	}
+	
+	/// <summary>
+	/// The height of debug view.
+	/// </summary>
+	public static int Height
+	{
+		set {
+			CreateInstance();
+			instance.height = value;
+		}
+	}
+	
+	/// <summary>
+	/// The font.
+	/// </summary>
+	public static Font Font
+	{
+		set {
+			CreateInstance();
+			instance.font = value;
+		}
+	}
+
+	/// <summary>
+	/// The color of the font.
+	/// </summary>
+	public static Color FontColor
+	{
+		set {
+			CreateInstance();
+			instance.fontColor = value;
+		}
+	}
+	
+	/// <summary>
+	/// The size of the font.
+	/// </summary>
+	/// <description>
+	/// This value effects only dynamic font supported envirment (Currentry Editor/PC/Mac only).
+	/// </description>
+	public static int FontSize
+	{
+		set {
+			CreateInstance();
+			instance.fontSize = value;
+		}
+	}
+	
+	/// <summary>
+	/// The text offset x.
+	/// </summary>
+	public static int TextOffsetX
+	{
+		set {
+			CreateInstance();
+			instance.textOffsetX = value;
+		}
+	}
+	
+	/// <summary>
+	/// The text offset y.
+	/// </summary>
+	public static int TextOffsetY
+	{
+		set {
+			CreateInstance();
+			instance.textOffsetX = value;
+		}
+	}
+	
+	/// <summary>
+	/// The color of the debug view background.
+	/// </summary>
+	public Color BackgroundColor
+	{
+		set {
+			CreateInstance();
+			instance.backgroundColor = value;
+		}
+	}
+	
+	public bool ViewEnabled
+	{
+		set {
+			CreateInstance();
+			instance.viewEnabled = value;
+		}
+	}
 	
 	public static void Log (string text)
 	{
