@@ -299,6 +299,15 @@ public class Devu : MonoBehaviour
 		}
 	}
 	
+	public static void Log (object obj)
+	{
+		if (obj == null) {
+			return;
+		}
+
+		Log (obj.ToString());
+	}
+	
 	public static void Log (string text)
 	{
 		if (text == null || text.Length == 0) {
